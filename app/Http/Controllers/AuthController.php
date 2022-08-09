@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -12,48 +13,75 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => bcrypt($request->password)
-        ]);
-        $token = JWTAuth::fromUser($user);
+        try {
+            Log::info('Getting register');
 
-        return response()->json(compact('user', 'token'), 201);
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'addres' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6',
+            ]);
+            if ($validator->fails()) {
+                return response()->json($validator->errors()->toJson(), 400);
+            }
+            $user = User::create([
+                'name' => $request->get('name'),
+                'addres' => $request->get('addres'),
+                'email' => $request->get('email'),
+                'password' => bcrypt($request->password)
+            ]);
+            $token = JWTAuth::fromUser($user);
+
+            return response()->json(compact('user', 'token'), 201);
+        } catch (\Exception $exception) {
+            Log::error('Error getting channel' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating channel'
+            ], 500);
+        }
     }
 
     public function login(Request $request)
     {
+        try {
+            /* El only te accede solo a los campos que tu le dices. */
 
-        /* El only te accede solo a los campos que tu le dices. */
+            $input = $request->only('email', 'password');
+            $jwt_token = null;
 
-        $input = $request->only('email', 'password');
-        $jwt_token = null;
+            if (!$jwt_token = JWTAuth::attempt($input)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Email or Password',
+                ], Response::HTTP_UNAUTHORIZED);
+            }
 
-        if (!$jwt_token = JWTAuth::attempt($input)) {
+            return response()->json([
+                'success' => true,
+                'token' => $jwt_token,
+            ]);
+        } catch (\Exception $exception) {
+            Log::error('Error login' . $exception->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid Email or Password',
-            ], Response::HTTP_UNAUTHORIZED);
+                'message' => 'Error login'
+            ], 500);
         }
-
-        return response()->json([
-            'success' => true,
-            'token' => $jwt_token,
-        ]);
     }
 
     public function me()
     {
-        return response()->json(auth()->user());
+        try {
+            return response()->json(auth()->user());
+        } catch (\Exception $exception) {
+            Log::error('Customer information error' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Customer information error'
+            ], 500);
+        }
     }
 
     public function logout(Request $request)

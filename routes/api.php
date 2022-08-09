@@ -15,17 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/', function(){
+    return 'Bienvenid@ a mi E-commerce.';
+});
+
+/* --------------------- AuthController -------------------- */
 Route::post('/register', [AuthController::class, 'register']);
-
 Route::post('/login', [AuthController::class, 'login']);
-
-//Asi estan agrupados por los que tienen jwt.
-
 Route::group(["middleware" => "jwt.auth"] , function() {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']); 
 });
+/* ------------------- ClientsController ------------------ */
+/* ------------------------- Admin ------------------------ */
+/* ---------------------- SuperAdmin ---------------------- */
 
-/* Route::get('/me', [AuthController::class, 'me'])->middleware('jwt.auth');
 
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('jwt.auth'); */
+/* ------------------- ProductsController ----------------- */
+/* ------------------- PurchasesController ---------------- */
