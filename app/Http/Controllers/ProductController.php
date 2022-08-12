@@ -196,4 +196,162 @@ class ProductController extends Controller
                 ],500);
         }
     }
+
+    public function productExpensive($price)
+    {
+        try {
+            Log::info('Retrieved the most expensive products');
+
+            $order = Product::where('product_price', '<', $price)
+            ->orderBy('product_price', 'desc')
+            ->get();
+
+            return response()->json(
+                [
+                    'succes' => true,
+                    'message' => $order,
+                ]
+                ,200);
+            
+        } catch (\Exception $exception) {
+            Log::error('Error with the most expensive product' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error with the most expensive product'
+            ], 500);
+        }
+    }
+
+    public function productLowCost($price)
+    {
+        try {
+            Log::info('Retrieved the most lowcost products');
+
+            $order = Product::where('product_price', '<', $price)
+            ->orderBy('product_price', 'asc')
+            ->get();
+
+            return response()->json(
+                [
+                    'succes' => true,
+                    'message' => $order,
+                ]
+                ,200);
+            
+        } catch (\Exception $exception) {
+            Log::error('Error with the most lowcost products' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error with the most lowcost products'
+            ], 500);
+        }
+    }
+
+    public function productName($letra)
+    {
+        try {
+            Log::info('Retrieved the products name');
+
+            $order = Product::where('name', 'like', $letra.'%')
+            ->get();
+
+            $cuantos = count($order);
+
+            if($cuantos === 0){
+                return response()->json(
+                    [
+                        'success' => true,
+                        'message' => 'There is no product with that name'
+                    ],
+                    
+                );
+            }
+
+            return response()->json(
+                [
+                    'succes' => true,
+                    'message' => $order,
+                ]
+                ,200);
+            
+        } catch (\Exception $exception) {
+            Log::error('Error with the products name' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error with the products name'
+            ], 500);
+        }
+    }
+    
+    public function productGenderF()
+    {
+        try {
+            Log::info('Recovered female gender products');
+
+            $order = Product::where('gender', 'like', 'F'.'%')
+            ->get();
+
+            $cuantos = count($order);
+
+            if($cuantos === 0){
+                return response()->json(
+                    [
+                        'success' => true,
+                        'message' => 'Error with the female gender products'
+                    ],
+                    
+                );
+            }
+
+            return response()->json(
+                [
+                    'succes' => true,
+                    'message' => $order,
+                ]
+                ,200);
+            
+        } catch (\Exception $exception) {
+            Log::error('Error with the female gender products' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error with the female gender products'
+            ], 500);
+        }
+    }
+
+    public function productGenderM()
+    {
+        try {
+            Log::info('Recovered female gender products');
+
+            $order = Product::where('gender', 'like', 'M'.'%')
+            ->get();
+
+            $cuantos = count($order);
+
+            if($cuantos === 0){
+                return response()->json(
+                    [
+                        'success' => true,
+                        'message' => 'Error with the female gender products'
+                    ],
+                    
+                );
+            }
+
+            return response()->json(
+                [
+                    'succes' => true,
+                    'message' => $order,
+                ]
+                ,200);
+            
+        } catch (\Exception $exception) {
+            Log::error('Error with the female gender products' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error with the female gender products'
+            ], 500);
+        }
+    }
 }

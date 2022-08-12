@@ -48,5 +48,11 @@ Route::group(["middleware" => "isSuperAdmin"], function () {
     Route::delete('/deleteproduct/{id}', [ProductController::class, 'deleteProduct']);
 });
 Route::get('/productall', [ProductController::class, 'productAll']);
+Route::get('/productlowcost/{price}', [ProductController::class, 'productLowCost']);
+Route::get('/productexpensive/{price}', [ProductController::class, 'productExpensive']);
+Route::get('/productname/{letra}', [ProductController::class, 'productName']);
+Route::get('/productgenderf', [ProductController::class, 'productGenderF']);
+Route::get('/productgenderm', [ProductController::class, 'productGenderM']);
 
 /* ------------------- PurchasesController ---------------- */
+
