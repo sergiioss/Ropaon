@@ -65,8 +65,6 @@ class ProductController extends Controller
         try{
             Log::info('Getting all Products');
 
-        $userId = auth()->user()->id;
-
         $product = Product::get()->toArray();
         
         return response()->json([
@@ -91,7 +89,11 @@ class ProductController extends Controller
 
             $validator = Validator::make($request->all(),[
                 'name'=> ['string'],
-                'url'=>['string']
+                'size' => ['string'],
+                'product_price' => ['integer'],
+                'url' => ['string'],
+                'color' => ['string'],
+                'gender' => ['string']
             ]);
 
             if($validator->fails()){
@@ -101,9 +103,9 @@ class ProductController extends Controller
                 ],400);
             };
 
-            $userId = auth()->user()->id;
-
-            $product = Product::query()->where('user_id', $userId)->find($id);
+            $product = Product::query()
+            ->where('id', $id)
+            ->find($id);
 
             if(!$product){
                 return response()->json(
@@ -115,15 +117,34 @@ class ProductController extends Controller
             }
 
             $name = $request->input('name');
+            $size = $request->input('size');
+            $product_price = $request->input('product_price');
+            $color = $request->input('color');
+            $gender = $request->input('gender');
             $url = $request->input('url');
-
-            $product->name = $name;
-            $product->url = $url;
             
             if(isset($name)){
+                $product->name = $name;
             };
 
             if(isset($url)){
+                $product->url = $url;
+            };
+
+            if(isset($size)){
+                $product->size = $size;
+            };
+
+            if(isset($product_price)){
+                $product->product_price = $product_price;
+            };
+
+            if(isset($color)){
+                $product->color = $color;
+            };
+
+            if(isset($gender)){
+                $product->gender = $gender;
             };
 
             $product->save();
@@ -148,10 +169,8 @@ class ProductController extends Controller
         try{
             Log::info('Delete a product');
 
-            $userId = auth()->user()->id;
-
             $product = Product::query()
-            ->where('user_id', $userId)
+            ->where('id', $id)
             ->find($id);
 
             if(!$product){
