@@ -39,7 +39,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            \Laravel\Sanctum\Http\Middleware\IsSuperAdmin::class,
+            \App\Http\Middleware\IsSuperAdmin::class,
             'isSuperAdmin',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
