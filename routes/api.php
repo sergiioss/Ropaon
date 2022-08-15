@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,10 +36,10 @@ Route::group(["middleware" => "jwt.auth"], function () {
 Route::group(["middleware" => ["jwt.auth", "isSuperAdmin"]], function () {
     /* ------------------------- ADMIN ---------------------- */
     Route::post('/user/add_admin/{id}', [UserController::class, 'rolAdmin']);
-    Route::post('/user/delete_admin/{id}', [UserController::class, 'deleteRolAdmin']);
+    Route::delete('/user/delete_admin/{id}', [UserController::class, 'deleteRolAdmin']);
     /* ---------------------- SUPER ADMIN -------------------- */
     Route::post('/user/super_admin/{id}', [UserController::class, 'rolSuperAdmin']);
-    Route::post('/user/delete_super_admin/{id}', [UserController::class, 'deleteRolSuperAdmin']);
+    Route::delete('/user/delete_super_admin/{id}', [UserController::class, 'deleteRolSuperAdmin']);
 });
 /* ------------------- ProductsController ----------------- */
 
@@ -55,4 +56,10 @@ Route::get('/productgenderf', [ProductController::class, 'productGenderF']);
 Route::get('/productgenderm', [ProductController::class, 'productGenderM']);
 
 /* ------------------- PurchasesController ---------------- */
+Route::group(["middleware" => "jwt.auth"], function () {
+    Route::post('/create/purchase', [PurchaseController::class, 'createPurchase']);
+    Route::get('/purchasesall', [PurchaseController::class, 'purchasesAll']);
+});
 
+Route::put('/updatedpurchase/{id}', [PurchaseController::class, 'updatedPurchase'])->middleware('isSuperAdmin');
+Route::delete('/deletepurchase/{id}', [PurchaseController::class, 'deletePurchase'])->middleware('isSuperAdmin');
