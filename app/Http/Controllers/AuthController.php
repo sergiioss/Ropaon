@@ -11,6 +11,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    const ROLE_USER = 1;
+
     public function register(Request $request)
     {
         try {
@@ -31,14 +33,15 @@ class AuthController extends Controller
                 'email' => $request->get('email'),
                 'password' => bcrypt($request->password)
             ]);
-            $token = JWTAuth::fromUser($user);
 
-            return response()->json(compact('user', 'token'), 201);
+            $user->roles()->attach(self::ROLE_USER);
+
+            return response()->json(compact('user'), 201);
         } catch (\Exception $exception) {
-            Log::error('Error getting channel' . $exception->getMessage());
+            Log::error('Error getting user' . $exception->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error creating channel'
+                'message' => 'Error creating user'
             ], 500);
         }
     }
@@ -100,6 +103,87 @@ class AuthController extends Controller
                 'success' => false,
                 'message' => 'Sorry, the user cannot be logged out'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function updatedUser(Request $request)
+    {
+        try {
+
+            Log::info("Updated User");
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'string|max:255',
+                'addres' => 'string|max:255',
+                'email' => 'string|email|max:255|unique:users',
+                'password' => 'string|min:6'
+
+            ]);
+            
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()
+                ], 400);
+            };
+
+            $userEmail = auth()->user()->email;
+
+            $user = User::query()
+                ->where('email', $userEmail)
+                ->get();
+
+            if (!$user) {
+                return response()->json(
+                    [
+                        'success' => true,
+                        'message' => 'Error'
+                    ]
+                );
+            }
+
+            $addres = $request->input('addres');
+            $name = $request->input('name');
+            $email = $request->input('email');
+            $password = bcrypt($request->password);
+
+            if (isset($addres)) {
+                $user = User::query()
+                    ->where('email', $userEmail)
+                    ->update(['users.addres' => $addres]);
+            }
+
+            if (isset($name)) {
+                $user = User::query()
+                    ->where('email', $userEmail)
+                    ->update(['users.name' => $name]);
+            }
+
+            if (isset($password)) {
+                $user = User::query()
+                    ->where('email', $userEmail)
+                    ->update(['users.password' => $password]);
+            }
+
+            if (isset($email)) {
+                $user = User::query()
+                    ->where('email', $userEmail)
+                    ->update(['users.email' => $email]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => "User updated"
+            ], 200);
+        } catch (\Exception $exception) {
+            Log::error('Error updated user' . $exception->getMessage());
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Error updated user'
+                ],
+                500
+            );
         }
     }
 }
