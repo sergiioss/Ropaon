@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Purchase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -184,6 +185,42 @@ class PurchaseController extends Controller
                     'success'=> false,
                     'message'=> 'Error delete purchase'
                 ],500);
+        }
+    }
+
+    public function purchasesB(){
+        try{
+        Log::info('Getting purchases');
+        
+        $userId = auth()->user()->id;
+
+        $purchase = Purchase::query()
+        ->where('user_id', $userId)
+        ->join('Users', 'Purchases.user_id', '=', 'Users.id')
+        ->join('Products','Purchases.product_id', '=', 'Products.id')
+        ->select('Users.name as Nombre', 'Products.name as Producto', 'Purchases.payment as Forma_de_pago', 'Purchases.total_price as Precio')
+        ->orderBy('Purchases.id', 'asc')
+        ->get();
+
+        if(!$purchase){
+            return response()->json([
+                'success'=> true,
+                'message'=> 'Purchase doesnt exists'
+            ],404);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'message'=> 'Purchase retrieved succesfull',
+            'data' => $purchase
+        ]);
+
+        }catch(\Exception $exception){
+            Log::error('Error creating purchases' . $exception->getMessage());
+            return response()->json([
+                'success'=> false,
+                'message'=> 'Error creating purchase'
+            ],500);
         }
     }
 }

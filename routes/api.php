@@ -59,6 +59,7 @@ Route::get('/productgenderm', [ProductController::class, 'productGenderM']);
 Route::group(["middleware" => "jwt.auth"], function () {
     Route::post('/create/purchase', [PurchaseController::class, 'createPurchase']);
     Route::get('/purchasesall', [PurchaseController::class, 'purchasesAll']);
+    Route::get('/purchasesb', [PurchaseController::class, 'purchasesB']);
 });
 
 Route::put('/updatedpurchase/{id}', [PurchaseController::class, 'updatedPurchase'])->middleware('isSuperAdmin');
