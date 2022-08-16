@@ -6,9 +6,9 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsSuperAdmin
+class IsMaster
 {
-    const ROLE_SUPER_ADMIN = 3;
+    const ROLE_MASTER = 3;
     /**
      * Handle an incoming request.
      *
@@ -22,9 +22,9 @@ class IsSuperAdmin
 
         $user = User::find($userId);
 
-        $isSuperAdmin = $user->roles->contains(self::ROLE_SUPER_ADMIN);
+        $isMaster = $user->roles->contains(self::ROLE_MASTER);
 
-        if(!$isSuperAdmin){
+        if(!$isMaster){
             return response()->json([
                 'succes' => false,
                 'message' => 'No existe en esta ruta'

@@ -33,7 +33,7 @@ Route::group(["middleware" => "jwt.auth"], function () {
 });
 /* ------------------- UsersController ------------------ */
 
-Route::group(["middleware" => ["jwt.auth", "isSuperAdmin"]], function () {
+Route::group(["middleware" => ["jwt.auth", "isMaster"]], function () {
     /* ------------------------- ADMIN ---------------------- */
     Route::post('/user/add_admin/{id}', [UserController::class, 'rolAdmin']);
     Route::delete('/user/delete_admin/{id}', [UserController::class, 'deleteRolAdmin']);
@@ -62,5 +62,5 @@ Route::group(["middleware" => "jwt.auth"], function () {
     Route::get('/purchasesb', [PurchaseController::class, 'purchasesB']);
 });
 
-Route::put('/updatedpurchase/{id}', [PurchaseController::class, 'updatedPurchase'])->middleware('isSuperAdmin');
-Route::delete('/deletepurchase/{id}', [PurchaseController::class, 'deletePurchase'])->middleware('isSuperAdmin');
+Route::put('/updatedpurchase/{id}', [PurchaseController::class, 'updatedPurchase'])->middleware('isMaster');
+Route::delete('/deletepurchase/{id}', [PurchaseController::class, 'deletePurchase'])->middleware('isMaster');
