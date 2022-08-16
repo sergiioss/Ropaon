@@ -43,7 +43,7 @@ Route::group(["middleware" => ["jwt.auth", "isSuperAdmin"]], function () {
 });
 /* ------------------- ProductsController ----------------- */
 
-Route::group(["middleware" => "isSuperAdmin"], function () {
+Route::group(["middleware" => "isAdmin"], function () {
     Route::post('/create', [ProductController::class, 'createProduct']);
     Route::put('/updatedproduct/{id}', [ProductController::class, 'updatedProduct']);
     Route::delete('/deleteproduct/{id}', [ProductController::class, 'deleteProduct']);
