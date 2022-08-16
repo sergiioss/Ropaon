@@ -27,7 +27,7 @@ class IsSuperAdmin
         if(!$isSuperAdmin){
             return response()->json([
                 'succes' => false,
-                'message' => 'No existe esta ruta'
+                'message' => 'No existe en esta ruta'
             ],404);
         }
         return $next($request);
