@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\IsSuperAdmin;
+use App\Http\Middleware\isSuperAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +44,7 @@ Route::group(["middleware" => ["jwt.auth", "isSuperAdmin"]], function () {
 });
 /* ------------------- ProductsController ----------------- */
 
-Route::group(["middleware" => [IsSuperAdmin::class]], function () {
+Route::group(["middleware" => [isSuperAdmin::class]], function () {
     Route::post('/create', [ProductController::class, 'createProduct']);
     Route::put('/updatedproduct/{id}', [ProductController::class, 'updatedProduct']);
     Route::delete('/deleteproduct/{id}', [ProductController::class, 'deleteProduct']);
