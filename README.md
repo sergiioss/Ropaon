@@ -33,35 +33,38 @@ Endpoints:
 <h3>Super Admin</h3>
 
 <strong>post('https://ropaon.herokuapp.com/api/user/add_admin/{id}</strong>
-- <p align="center"><img src="/fotos/schema.png"></p>
+<p align="center"><img src="/fotos/addAdmin.png"></p>
 
 <strong>post('https://proyecto-discord.herokuapp.com/api/user/delete_admin/{id}'</strong>
-- <p align="center"><img src="/fotos/schema.png"></p>
+<p align="center"><img src="/fotos/removeAdmin.png"></p>
 
 <strong>Route::post('https://proyecto-discord.herokuapp.com/api/user/super_admin/{id}</strong>
-- <p align="center"><img src="/fotos/schema.png"></p>
+<p align="center"><img src="/fotos/addSuperAdmin.png"></p>
 
 <strong>Route::post('https://proyecto-discord.herokuapp.com/api/user/delete_super_admin/{id}</strong>
-- <p align="center"><img src="/fotos/schema.png"></p>
+<p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
 
-<h3>Juegos</h3>
+<h3>Compras</h3>
 
-<strong>Route::post('https://proyecto-discord.herokuapp.com/api/create'</strong>
-- El usuario crea un juego.
+<strong>post('https://ropaon.herokuapp.com/api/create/purchase'</strong>
+<p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
 
-<strong>Route::get('https://proyecto-discord.herokuapp.com/api/gameid'</strong>
-- Busca todas las salas de los juegos creados.
+<strong>get('https://ropaon.herokuapp.com/api/purchasesall'</strong>
+<p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
 
-<strong>Route::put('https://proyecto-discord.herokuapp.com/api/updatedgame/{id}</strong>
-- Cambia el nombre de la sala de juego.
+<strong>put('https://ropaon.herokuapp.com/api/updatedpurchase/{id}'</strong>
+<p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
 
-<strong>Route::delete('https://proyecto-discord.herokuapp.com/api/deletegame/{id}</strong>
-- Elimina la sala del juego siempre y cuando la haya creado el mismo usuario.
+<strong>delete('https://ropaon.herokuapp.com/api/deletepurchase/{id}'</strong>
+<p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
+
+<strong>get('https://ropaon.herokuapp.com/api/purchasesb'</strong>
+<p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
 
 <h3>Canales</h3>
 
 <strong>Route::post('https://proyecto-discord.herokuapp.com/api/create/channel/{id}</strong>
-- Crea un canal dentro de un juego.
+<p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
 
 <strong>Route::get('https://proyecto-discord.herokuapp.com/api/channelall'</strong>
 - Hace una busqueda de todos los canales del juego.

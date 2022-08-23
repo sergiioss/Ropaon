@@ -196,10 +196,10 @@ class PurchaseController extends Controller
 
         $purchase = Purchase::query()
         ->where('user_id', $userId)
-        ->join('Users', 'Purchases.user_id', '=', 'Users.id')
-        ->join('Products','Purchases.product_id', '=', 'Products.id')
-        ->select('Users.name as Nombre', 'Products.name as Producto', 'Purchases.payment as Forma_de_pago', 'Purchases.total_price as Precio')
-        ->orderBy('Purchases.id', 'asc')
+        ->join('users', 'purchases.user_id', '=', 'users.id')
+        ->join('products','purchases.product_id', '=', 'products.id')
+        ->select('users.name as Nombre', 'products.name as Producto', 'purchases.payment as Forma_de_pago', 'purchases.total_price as Precio')
+        ->orderBy('purchases.id', 'asc')
         ->get();
 
         if(!$purchase){
