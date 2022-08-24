@@ -53,6 +53,7 @@ class AuthController extends Controller
 
             $input = $request->only('email', 'password');
             $jwt_token = null;
+             
 
             if (!$jwt_token = JWTAuth::attempt($input)) {
                 return response()->json([
@@ -60,10 +61,12 @@ class AuthController extends Controller
                     'message' => 'Invalid Email or Password',
                 ], Response::HTTP_UNAUTHORIZED);
             }
+            $userEmail = auth()->user();
 
             return response()->json([
                 'success' => true,
                 'token' => $jwt_token,
+                'user' => $userEmail,
             ]);
         } catch (\Exception $exception) {
             Log::error('Error login' . $exception->getMessage());
