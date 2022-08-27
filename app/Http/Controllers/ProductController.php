@@ -260,7 +260,7 @@ class ProductController extends Controller
             if($cuantos === 0){
                 return response()->json(
                     [
-                        'success' => true,
+                        'success' => false,
                         'message' => 'There is no product with that name'
                     ],
                     
