@@ -18,7 +18,7 @@ class PurchaseController extends Controller
                 'total_price'=> ['required', 'string'],
                 'payment' => ['required', 'string'],
                 'purchase_date' => ['required','string'],
-                'product_id'=> ['required','string']
+                'product_id'=> ['required','integer']
             ]);
 
             if($validator->fails()){
