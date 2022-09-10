@@ -35,13 +35,13 @@ Endpoints:
 <strong>post('https://ropaon.herokuapp.com/api/user/add_admin/{id}</strong>
 <p align="center"><img src="/fotos/addAdmin.png"></p>
 
-<strong>post('https://proyecto-discord.herokuapp.com/api/user/delete_admin/{id}'</strong>
+<strong>delete('https://proyecto-discord.herokuapp.com/api/user/delete_admin/{id}'</strong>
 <p align="center"><img src="/fotos/removeAdmin.png"></p>
 
 <strong>Route::post('https://proyecto-discord.herokuapp.com/api/user/super_admin/{id}</strong>
 <p align="center"><img src="/fotos/addSuperAdmin.png"></p>
 
-<strong>Route::post('https://proyecto-discord.herokuapp.com/api/user/delete_super_admin/{id}</strong>
+<strong>delete('https://proyecto-discord.herokuapp.com/api/user/delete_super_admin/{id}</strong>
 <p align="center"><img src="/fotos/removeSuperAdmin.png"></p>
 
 <h3>Compras</h3>
