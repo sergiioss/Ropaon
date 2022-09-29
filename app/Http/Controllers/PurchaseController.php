@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use Hamcrest\Core\HasToString;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +19,7 @@ class PurchaseController extends Controller
                 'total_price'=> ['required', 'string'],
                 'payment' => ['required', 'string'],
                 'purchase_date' => ['required','string'],
-                'product_id'=> ['required','integer']
+                'products' => ['required_array_keys']
             ]);
 
             if($validator->fails()){
@@ -31,7 +32,7 @@ class PurchaseController extends Controller
             $total_price = $request->input('total_price');
             $payment = $request->input('payment');
             $purchase_date = $request->input('purchase_date');
-            $product_id = $request->input('product_id');
+            $products = $request->input('products');
             $userId = auth()->user()->id;
 
             $purchase = new Purchase();
@@ -39,9 +40,17 @@ class PurchaseController extends Controller
             $purchase->payment = $payment;
             $purchase->user_id = $userId;
             $purchase->purchase_date = $purchase_date;
-            $purchase->product_id = $product_id;
-
+            
             $purchase->save();
+
+            foreach ($products as $product){
+                DB::table('product_purchase')->insert([
+                    'purchase_id' => $purchase->id,
+                    'product_id' => $product['product_id'],
+                    'price' => $product['product_price'],
+                    'quantity' => $product['quantity']
+                ]);
+            }
 
             return response()->json ([
                 'success'=> true,
