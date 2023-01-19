@@ -23,6 +23,7 @@ class AuthController extends Controller
                 'addres' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6',
+                'photo' => 'string',
             ]);
             if ($validator->fails()) {
                 return response()->json($validator->errors()->toJson(), 400);
@@ -31,7 +32,8 @@ class AuthController extends Controller
                 'name' => $request->get('name'),
                 'addres' => $request->get('addres'),
                 'email' => $request->get('email'),
-                'password' => bcrypt($request->password)
+                'password' => bcrypt($request->password),
+                'photo' => 'https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png'
             ]);
 
             $user->roles()->attach(self::ROLE_USER);
@@ -119,7 +121,8 @@ class AuthController extends Controller
                 'name' => 'string|max:255',
                 'addres' => 'string|max:255',
                 'email' => 'string|email|max:255|unique:users',
-                'password' => 'string|min:6'
+                'password' => 'string|min:6',
+                'photo' => 'string',
 
             ]);
             
@@ -149,6 +152,7 @@ class AuthController extends Controller
             $name = $request->input('name');
             $email = $request->input('email');
             $password = bcrypt($request->password);
+            $photo = $request->input('photo');
 
             if (isset($addres)) {
                 $user = User::query()
@@ -166,6 +170,11 @@ class AuthController extends Controller
                 $user = User::query()
                     ->where('email', $userEmail)
                     ->update(['users.password' => $password]);
+            }
+            if (isset($photo)) {
+                $user = User::query()
+                    ->where('email', $userEmail)
+                    ->update(['users.photo' => $photo]);
             }
 
             if (isset($email)) {

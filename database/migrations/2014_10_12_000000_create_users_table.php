@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('addres');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('photo');
             
             $table->timestamps();
         });

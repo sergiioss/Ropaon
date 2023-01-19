@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'name' => "Sergio",
             'addres' => "C/ La Felicidad, 11",
             'email' => "sergio@sergio.com",
-            'password' => bcrypt('123456')
+            'password' => bcrypt('123456'),
+            'photo' => "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png"
 
         ]);
 
@@ -27,7 +28,8 @@ class UserSeeder extends Seeder
             'name' => "Dani",
             'addres' => "C/ Principal, 5",
             'email' => "dani@dani.com",
-            'password' => bcrypt('123456')
+            'password' => bcrypt('123456'),
+            'photo' => "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png"
         ]);
     }
 }
