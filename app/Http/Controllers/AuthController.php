@@ -55,7 +55,6 @@ class AuthController extends Controller
 
             $input = $request->only('email', 'password');
             $jwt_token = null;
-             
 
             if (!$jwt_token = JWTAuth::attempt($input)) {
                 return response()->json([
@@ -121,7 +120,7 @@ class AuthController extends Controller
                 'name' => 'string|max:255',
                 'addres' => 'string|max:255',
                 'email' => 'string|email|max:255|unique:users',
-                'password' => 'string|min:6',
+                /* 'password' => 'string|min:6', */
                 'photo' => 'string',
 
             ]);
@@ -134,6 +133,7 @@ class AuthController extends Controller
             };
 
             $userEmail = auth()->user()->email;
+            /* $userPassword = auth()->user()->password; */
 
             $user = User::query()
                 ->where('email', $userEmail)
@@ -147,30 +147,32 @@ class AuthController extends Controller
                     ]
                 );
             }
-
+            
             $addres = $request->input('addres');
             $name = $request->input('name');
+            /* $password = bcrypt($request->$userPassword); */
             $email = $request->input('email');
-            $password = bcrypt($request->password);
             $photo = $request->input('photo');
-
+            
             if (isset($addres)) {
                 $user = User::query()
-                    ->where('email', $userEmail)
-                    ->update(['users.addres' => $addres]);
+                ->where('email', $userEmail)
+                ->update(['users.addres' => $addres]);
             }
-
+            
             if (isset($name)) {
                 $user = User::query()
-                    ->where('email', $userEmail)
-                    ->update(['users.name' => $name]);
+                ->where('email', $userEmail)
+                ->update(['users.name' => $name]);
             }
-
-            if (isset($password)) {
+            
+            /* if (isset($password)) {
                 $user = User::query()
-                    ->where('email', $userEmail)
-                    ->update(['users.password' => $password]);
-            }
+                ->where('email', $userEmail)
+                ->update(['users.password' => $password]);
+                print_r('hola');
+            } */
+
             if (isset($photo)) {
                 $user = User::query()
                     ->where('email', $userEmail)
