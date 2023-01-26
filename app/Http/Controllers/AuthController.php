@@ -133,6 +133,7 @@ class AuthController extends Controller
             };
 
             $userEmail = auth()->user()->email;
+            $userData = auth()->user();
             /* $userPassword = auth()->user()->password; */
 
             $user = User::query()
@@ -187,7 +188,8 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => "User updated"
+                'message' => "User updated",
+                'user'=> $userData
             ], 200);
         } catch (\Exception $exception) {
             Log::error('Error updated user' . $exception->getMessage());
