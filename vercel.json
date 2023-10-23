@@ -5,12 +5,12 @@
     },
     "routes": [
         {
-            "src":"/",
-            "dest":"/"
+            "src": "/(css|js)/(.*)",
+            "dest": "public/$1/$2"
         },
         {
-            "src": "/",
-            "dest": "/api"
+            "src": "/(.*)",
+            "dest": "/api/index.php"
         }
     ],
     "env": {
