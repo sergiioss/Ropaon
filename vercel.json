@@ -5,12 +5,12 @@
     },
     "routes": [
         {
-            "src": "/build/(.*)",
-            "dest": "/api"
-        },
-        {
             "src":"/",
             "dest":"/"
+        },
+        {
+            "src": "/",
+            "dest": "/api"
         }
     ],
     "env": {
