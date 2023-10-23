@@ -8,7 +8,7 @@
         "dest": "/api/index.php"
     }],
     "rewrites":  [
-        {"source": "/(.*)", "destination": "/"}
+        {"source": "/(.*)", "destination": "/api/index.php"}
     ],
     "env": {
         "APP_ENV": "production",
