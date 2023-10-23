@@ -3,8 +3,8 @@
     "functions": {
         "api/index.php": { "runtime": "vercel-php@0.6.0" }
     },
-    "rewrites":  [
-        {"source": "/(.*)", "destination": "/"}
+    "routes": [
+          { "src": "/[^.]+", "dest": "/" }
     ],
     "env": {
         "APP_ENV": "production",
