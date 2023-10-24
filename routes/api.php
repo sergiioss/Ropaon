@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 /* --------------------- AuthController -------------------- */
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
+Illuminate\Support\Facades\Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::group(["middleware" => "jwt.auth"], function () {
     Route::get('/me', [AuthController::class, 'me']);
