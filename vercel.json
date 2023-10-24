@@ -6,7 +6,7 @@
     "redirects": [
       {
         "source": "/(.*)",
-        "destination": "https://ropaon.vercel.app/api"
+        "destination": "/(.*)/api/:path"
       }
     ],
     "env": {
