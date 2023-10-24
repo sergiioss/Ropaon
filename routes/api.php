@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 /* --------------------- AuthController -------------------- */
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::group(["middleware" => "jwt.auth"], function () {
     Route::get('/me', [AuthController::class, 'me']);
@@ -48,7 +48,7 @@ Route::group(["middleware" => "isAdmin"], function () {
     Route::put('/updatedproduct/{id}', [ProductController::class, 'updatedProduct']);
     Route::delete('/deleteproduct/{id}', [ProductController::class, 'deleteProduct']);
 });
-Route::get('/productall', [ProductController::class, 'productAll']);
+Route::get('/productall', [App\Http\Controllers\ProductController::class, 'productAll']);
 Route::get('/productlowcost/{price}', [ProductController::class, 'productLowCost']);
 Route::get('/productexpensive/{price}', [ProductController::class, 'productExpensive']);
 Route::get('/productname/{letra}', [ProductController::class, 'productName']);
