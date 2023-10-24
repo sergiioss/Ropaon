@@ -3,23 +3,6 @@
     "functions": {
         "api/index.php": { "runtime": "vercel-php@0.6.0" }
     },
-    "routes": [
-        {
-          "src": "/(.*/.(css|js|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|svg|json))",
-          "headers": {
-            "Cache-Control": "public, max-age=31536000, immutable"
-          },
-          "continue": true
-        },
-        {
-          "src": "/(.*/.(php))",
-          "dest": "public/index.php"
-        },
-        {
-          "src": "/.*",
-          "dest": "public/index.php"
-        }
-    ],
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
